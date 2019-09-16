@@ -1,27 +1,29 @@
 <template>
   <div id="app">
-    <Login v-show="computed_userdata" @clicked="clickedFromChiled"/> <!-- use v-bind:prop_name to send prop to child,
-                                                                    from child, use function $emit to get data emitted from child-->
-    <div v-show="showNav">
-      <Header/>
-    </div>
+    <!-- <Login v-if="computed_userdata" @clicked="clickedFromChiled"/> use v-bind:prop_name to send prop to child,
+                                                                    from child, use function $emit to get data emitted from child
+                                                                    -->
+  
+    <Login v-if="computed_userdata" />
+    <Header v-else v-bind:email="userData.user"/>
+
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
 import Login from './components/Login.vue'
-import {mapState, mapActions} from 'vuex';
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'app',
   components: {
     Login,
+    Header,
   },
   data: function(){
     return {
-      login: 'load login from parent',
-      showNav: false
+      email: this.userData
     }
   },
   methods: {
