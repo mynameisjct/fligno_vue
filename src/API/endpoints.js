@@ -71,5 +71,20 @@ export const profiles = {
         return(
             'delete/profile'
         )
+    },
+    update: function(){
+        return (
+            'profile/update'
+        )
+    },
+    byEmail: function(payload){
+        return(
+            'get/profile/' + payload // where payload is email
+        )
+    },
+    save: function() {
+        return(
+            'profile/save'
+        )
     }
 }

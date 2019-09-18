@@ -4,8 +4,9 @@
                                                                     from child, use function $emit to get data emitted from child
                                                                     -->
   
-    <Login v-if="computed_userdata" />
-    <Header v-else v-bind:email="userData.user"/>
+    <!-- <Login v-if="computed_userdata" />
+    <Header v-else v-bind:email="userData.user"/> -->
+    <Header v-bind:email="userData.user"/>
 
   </div>
 </template>

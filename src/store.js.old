@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as api from './API/Query/LoginAPI'
+import * as profileAPI from './API/Query/ProfileAPI'
 
 Vue.use(Vuex)
 
@@ -9,7 +10,9 @@ export default new Vuex.Store({
     loginLoading: false,
     loginError: null,
     loginSuccess: false,
-    userData: {}
+    userData: {},
+    profileData: {},
+    profileError: null,
   },
   mutations: {
     isLoading: state => state.loginLoading = true,
@@ -23,6 +26,14 @@ export default new Vuex.Store({
       state.loginSuccess = true,
       state.userData = data,
       state.loginError = null
+    },
+    fetchProfiles: (state,data) => {
+      state.profileData = data,
+      state.profileError = null
+    },
+    fetchProfilesError: (state,message) => {
+      state.profileData = {},
+      state.profileError = message
     }
   },
   actions: {
@@ -45,6 +56,24 @@ export default new Vuex.Store({
       .catch((err) => {
         commit('loginExeption',err.getMessage())
       })
+    },
+
+    getProfiles({commit},payload){
+      commit('isLoading')
+
+      profileAPI.getProfileData(payload)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        commit('fetchProfiles',res)
+      })
+      .then(() =>{
+        commit('doneLoading')
+      })
+      .catch((err) =>{
+        console.log(err.getMessage())
+        commit('fetchProfilesError',err.getMessage())
+      })
     }
-  }
+  },
 })
