@@ -13,7 +13,8 @@
             <b-form-group label="More About Me" label-for="input-about-me">
                 <b-form-textarea id="input-about-me" v-model="profileData.p_description" required />
             </b-form-group>
-            <b-button type="submit" variant="primary">Update</b-button> &nbsp;
+            <b-button type="submit" variant="primary">Update</b-button>&nbsp;
+            <b-button @click="onDelete" variant="warning">Delete</b-button> &nbsp;&nbsp;
             <b-button @click="onCancel" variant="danger">Cancel</b-button>
         </b-form>
     </div>
@@ -32,7 +33,7 @@ export default {
                 p_firstname: this.firstname,
                 p_middlename: this.middlename,
                 p_description: this.description,
-                p_userid: this.userid,
+                p_userid: this.userid, // for multiple delete, change this to array
             }
             
         }    
@@ -48,14 +49,23 @@ export default {
                 userid: p_userid
             })
             // console.log('submitted')
+            this.resetGetProfileByEmail()
             this.$router.push("/")
         },
         onCancel(e){
+            this.resetGetProfileByEmail()
             this.$router.push("/")
         },
         ...mapActions([
-            'updateProfile'
-        ])
+            'updateProfile',
+            'deleteProfile',
+            'resetGetProfileByEmail'
+        ]),
+        onDelete(e){
+            this.deleteProfile([this.profileData.p_userid])
+            this.resetGetProfileByEmail()
+            this.$router.push("/")
+        }
     },
     props:[
         'lastname',

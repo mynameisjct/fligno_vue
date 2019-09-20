@@ -1,6 +1,7 @@
 import * as loginAPI from '../API/Query/LoginAPI'
 import * as profileAPI from '../API/Query/ProfileAPI'
 import * as validationAPI from '../API/Query/ValidationAPI'
+import * as emailAPI from '../API/Query/EmailAPI' 
 
 export default {
 
@@ -62,6 +63,10 @@ export default {
         })
       },
 
+      resetGetProfileByEmail({commit}){
+        commit('resetProfileByEmail', {})
+      },
+
       updateProfile({commit},payload){
         commit('isLoading')
 
@@ -93,6 +98,59 @@ export default {
         })
       },
 
+      searchProfile({commit},payload){
+        commit('isLoading')
+
+        profileAPI.searchProfile({},payload)
+        .then(res => res.json())
+        .then(res => {
+          commit('search',res)
+        })
+        .then(() => {
+          commit('doneLoading')
+        })
+        .catch((ex) => {
+
+        })
+      },
+
+      searchReset({commit}){
+        commit('search',[])
+      },
+
+      deleteProfile({commit},payload){
+        commit('isLoading')
+
+        profileAPI.deleteProfile(payload)
+        .then(res => res.json())
+        .then(res => {
+          // res returning res.message and res.error
+          // commit delete action
+        })
+        .then(() => {
+          commit('doneLoading')
+        })
+        .catch(() => {})
+      },
+
+      getYearlyReport({commit},payload){
+        commit('isLoading')
+
+        profileAPI.getYearlyReport(payload)
+        .then(res => res.json())
+        .then(res => {
+          commit('reports',res)
+        })
+        .then(() => {
+          commit('doneLoading')
+        })
+        .catch((ex) => {})
+      },
+
+      restYearlyReport({commit}){
+        commit('reports',{})
+      },
+
       /** VALIDATION */
 
       emailValidation({commit}, payload){
@@ -114,5 +172,21 @@ export default {
 
       revertDefault({commit}){
         commit('validateEmail', true)
+      },
+
+      /** EMAIL SENDING */
+
+      resetPassword({commit}, payload){
+        commit('isLoading')
+
+        emailAPI.doResetPassword(payload)
+        .then(res => res.json())
+        .then(res => {
+          commit('resetpassword',res.message)
+        })
+        .then(() => {
+          commit('doneLoading')
+        })
+        .catch((ex) => {})
       }
 }

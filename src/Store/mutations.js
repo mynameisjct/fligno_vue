@@ -24,11 +24,22 @@ export default {
       state.profileByEmail = data,
       state.profileError = null
     },
+    resetProfileByEmail: (state,data) => {
+      state.profileByEmail = data
+    },
     validateEmail: (state,data) => {
       state.validation = data
     },
     saveProfile: (state,data) => {
       state.error = data
+    },
+    search: (state,data) => {
+      state.searchResults = data
+    },
+    reports: (state,data) => {
+      state.reports = data
+    },
+    resetpassword: (state,data) => {
+      state.mailMessage = data
     }
-
 }

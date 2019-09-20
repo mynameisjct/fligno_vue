@@ -8,4 +8,7 @@ export default {
   profileByEmail: {},
   validation: true,
   error: '',
+  searchResults: [],
+  reports: {},
+  mailMessage: '',
 }

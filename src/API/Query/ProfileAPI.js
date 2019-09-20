@@ -6,3 +6,5 @@ export const deleteProfile = (payload,params) => fetchApi(endPoints.profiles.del
 export const getProfileOnEmail = (payload,params) => fetchApi(endPoints.profiles.byEmail(payload),payload,'get')
 export const updateProfile = (payload,params) => fetchApi(endPoints.profiles.update(payload),payload,'post')
 export const saveProfile = (payload,params) => fetchApi(endPoints.profiles.save(payload),payload,'post')
+export const searchProfile = (payload,params) => fetchApi(endPoints.profiles.search(params),payload,'get')
+export const getYearlyReport = (payload,params) => fetchApi(endPoints.profiles.reports(payload),payload,'get')

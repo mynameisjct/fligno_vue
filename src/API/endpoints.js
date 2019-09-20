@@ -86,5 +86,23 @@ export const profiles = {
         return(
             'profile/save'
         )
+    },
+    search: function(payload){
+        return(
+            'profile/search/' + payload.limit + '/' + payload.name
+        )
+    },
+    reports: function(payload){
+        return(
+            'profile/reports/monthly/' + payload // where payload is year
+        )
+    }
+}
+
+export const email = {
+    resetpassword: function(payload) {
+        return(
+            'resetpassword/' + payload
+        )
     }
 }

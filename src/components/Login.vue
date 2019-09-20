@@ -9,12 +9,15 @@
       <input type="email" placeholder="E-Mail" v-model="email">
       <input type="password" placeholder="Password" v-model="password">
       <button type="submit">Login</button>
+      <b-link v-b-tooltip.hover title="Click to reset password whose email on the field above." @click="doResetPass">Reset Password</b-link>
     </form>
+    <Modal id="resetmodal" :header="header" :message="message" />
   </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapState, mapActions} from 'vuex'
+import Modal from './modal/Modal.vue'
 
 export default {
     name: 'login',
@@ -28,22 +31,53 @@ export default {
 						})
 				},
 				...mapActions([
-					'doLogin'
-				])
+          'doLogin',
+          'resetPassword'
+        ]),
+        doResetPass() {
+          if(this.email.length > 0){
+            this.resetPassword(this.email)
+          }else{
+            this.header = "Unknown Email"
+            this.message = "Seems you forgot to provide email address"
+            this.$bvModal.show("resetmodal")
+          }
+        }
 		},
 		data: function(){
 			return{
 				email:'',
-				password: '',
+        password: '',
+        header: '',
+        message: '',
 			}
 		},
 		computed: {
 			...mapState([
 				'loginLoading',
 				'loginError',
-				'loginSuccess',
-			])
-		}
+        'loginSuccess',
+        'mailMessage',
+      ]),
+    },
+    components: {
+      Modal
+    },
+    watch: {
+      mailMessage(newVal, oldVal){
+        if(newVal !== undefined){
+          this.message = newVal
+
+          if(this.message.length > 5){
+            this.header = "Error while ressting password"
+            this.$bvModal.show("resetmodal")
+          }else{
+            this.header = "Please check your email"
+            this.$bvModal.show("resetmodal")
+          }
+       }
+      }
+    },
 }
 </script>
 <style scoped lang="scss">

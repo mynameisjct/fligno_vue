@@ -4,9 +4,9 @@
                                                                     from child, use function $emit to get data emitted from child
                                                                     -->
   
-    <!-- <Login v-if="computed_userdata" />
-    <Header v-else v-bind:email="userData.user"/> -->
-    <Header v-bind:email="userData.user"/>
+    <Login v-if="computed_userdata" />
+    <Header v-else v-bind:email="userData.user"/>
+    <!-- <Header v-bind:email="userData.user"/> -->
 
   </div>
 </template>
@@ -14,7 +14,7 @@
 <script>
 import Header from './components/Header.vue'
 import Login from './components/Login.vue'
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'app',
@@ -36,6 +36,9 @@ export default {
   computed: {
     ...mapState([
       'userData'
+    ]),
+    ...mapGetters([
+      'getUserLogin'
     ]),
     computed_userdata: function(){
       if(Object.entries(this.userData).length === 0){

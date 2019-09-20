@@ -26,6 +26,7 @@ export default {
     },
     data(){
         return{
+            profileResults: {}
         }
     },
     methods: {
@@ -44,9 +45,19 @@ export default {
             if(Object.entries(this.profileByEmail).length === 0){
                 return []
             }else{
-                return this.profileByEmail
+                return this.profileByEmail // objects of profile
             }
         }
-    }
+    },
+    // watch: {
+    //     profileByEmail(newValue, oldValue){
+    //         console.log('new value: ', newValue, 'old value: ', oldValue)
+    //         if(Object.entries(newValue).length === 0){
+    //             this.profileResults = []
+    //         }else{
+    //             this.profileResults = newValue // objects of profile
+    //         }
+    //     }
+    // }
 }
 </script>
